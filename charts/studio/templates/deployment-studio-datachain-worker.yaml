@@ -56,6 +56,8 @@ spec:
               value: "1"
             - name: "WAIT_FOR_MIGRATIONS"
               value: "0"
+            - name: WATCHDOG_KEEPALIVE_FILE
+              value: "/tmp/watchdog-keepalive"
           envFrom:
             - configMapRef:
                 name: studio
@@ -71,6 +73,18 @@ spec:
             - secretRef:
                 name: {{ .Values.studioDatachainWorker.envFromSecret }}
             {{- end }}
+          startupProbe:
+            exec:
+              command: ["/app/bin/healthcheck/datachain-worker-startup.sh"]
+            initialDelaySeconds: 3
+            periodSeconds: 3
+            failureThreshold: 100
+          livenessProbe:
+            exec:
+              command: ["/app/bin/healthcheck/datachain-worker-liveness.sh"]
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 3
           volumeMounts:
             - name: studio-ca-certificates
               mountPath: /usr/local/share/ca-certificates
