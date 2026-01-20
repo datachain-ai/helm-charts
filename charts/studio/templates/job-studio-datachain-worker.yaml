@@ -28,7 +28,7 @@ spec:
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          serviceAccountName: {{ include "studio-datachain-worker.serviceAccountName" . }}
+          automountServiceAccountToken: false
           runtimeClassName: {{ (.Values.studioDatachainWorkerJobTemplate).runtimeClassName }}
           securityContext:
             fsGroup: 103
