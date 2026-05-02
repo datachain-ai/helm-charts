@@ -422,6 +422,9 @@ studioUi:
 
   affinity: {}
 
+  # -- Container lifecycle hooks. Example: {preStop: {sleep: {seconds: 10}}}
+  lifecycle: {}
+
 # -- Studio Backend settings group
 studioBackend:
   # -- Additional environment variables for backend pods
@@ -485,6 +488,9 @@ studioBackend:
 
   affinity: {}
 
+  # -- Container lifecycle hooks. Example: {preStop: {sleep: {seconds: 10}}}
+  lifecycle: {}
+
   datachainApi:
     enabled: false
 
@@ -505,6 +511,9 @@ studioBackend:
       maxReplicas: 5
       targetCPUUtilizationPercentage: 80
       # targetMemoryUtilizationPercentage: 80
+
+    # -- Container lifecycle hooks. Example: {preStop: {sleep: {seconds: 10}}}
+    lifecycle: {}
 
 # -- Studio Beat settings group
 studioBeat:
