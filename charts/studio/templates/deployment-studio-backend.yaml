@@ -108,6 +108,10 @@ spec:
             periodSeconds: 10
             failureThreshold: 5
             timeoutSeconds: 60
+          {{- with .Values.studioBackend.lifecycle }}
+          lifecycle:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             {{ if not .Values.global.blobvault.bucket }}
             - name: blobvault
