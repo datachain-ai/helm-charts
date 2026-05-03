@@ -3,6 +3,8 @@
   "extends": [
     "config:recommended"
   ],
+  // Rationale at https://github.com/datachain-ai/platform/pull/7143
+  "minimumReleaseAge": "14 days",
   "schedule": [
     "on Wednesday"
   ],
