@@ -1349,7 +1349,7 @@ vector-aggregator:
         inputs: [kubernetes_events_deduped]
         encoding:
           codec: json
-        path: /data/vector/events/%Y-%m-%d.log
+        path: /data/vector/events/%Y-%m-%d-%H-00-00.log
       logs_file:
         type: file
         inputs: [vector_agent_route.logs]
@@ -1361,7 +1361,7 @@ vector-aggregator:
         inputs: [vector_agent_route.metrics]
         encoding:
           codec: json
-        path: /data/vector/metrics/%Y-%m-%d.log
+        path: /data/vector/metrics/%Y-%m-%d-%H-00-00.log
 
   env:
     - name: KUBERNETES_SERVICE_ACCOUNT_TOKEN
