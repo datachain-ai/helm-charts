@@ -44,6 +44,16 @@ global:
   #
   customCaCerts: []
 
+  # -- Studio: Name of an existing Secret in the release namespace whose data keys
+  # will be projected alongside the chart-managed `studio-ca-certificates` ConfigMap
+  # under `/usr/local/share/ca-certificates/`. Intended for CA bundles managed
+  # out-of-band (e.g. via External Secrets) so they can be rotated without a chart
+  # bump. Secret keys should end in `.crt` and must not collide with the keys
+  # generated from `customCaCert`/`customCaCerts` (`self_signed_ca*.crt`). Pods are
+  # not auto-rolled when the Secret's contents change — use a controller such as
+  # stakater/reloader if you need rotation to take effect without a manual restart.
+  customCaCertsFromSecret: ""
+
 
   # -- Studio: Additional environment variables for all pods
   envVars: {}

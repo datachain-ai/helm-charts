@@ -1,6 +1,6 @@
 # studio
 
-![Version: 0.19.74](https://img.shields.io/badge/Version-0.19.74-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
+![Version: 0.19.75](https://img.shields.io/badge/Version-0.19.75-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -45,6 +45,7 @@ A Helm chart for Kubernetes
 | global.celery.resultBackend | string | `""` | Celery result URL |
 | global.customCaCert | DEPRECATED | `""` | Studio: Custom CA certificate in PEM format Deprecated in favor of `customCaCerts` customCaCert: |-   -----BEGIN CERTIFICATE-----   ....   -----END CERTIFICATE-----  |
 | global.customCaCerts | list | `[]` | Studio: Custom CA certificate in PEM format customCaCerts: - |-     -----BEGIN CERTIFICATE-----     ....     -----END CERTIFICATE-----  |
+| global.customCaCertsFromSecret | string | `""` | Studio: Name of an existing Secret in the release namespace whose data keys will be projected alongside the chart-managed `studio-ca-certificates` ConfigMap under `/usr/local/share/ca-certificates/`. Intended for CA bundles managed out-of-band (e.g. via External Secrets) so they can be rotated without a chart bump. Secret keys should end in `.crt` and must not collide with the keys generated from `customCaCert`/`customCaCerts` (`self_signed_ca*.crt`). Pods are not auto-rolled when the Secret's contents change — use a controller such as stakater/reloader if you need rotation to take effect without a manual restart. |
 | global.datachain | object | `{}` | Studio: Settings related to DataChain |
 | global.envFromSecret | string | `""` | Studio: The name of an existing Secret that contains sensitive environment variables passed to all Studio pods. |
 | global.envVars | object | `{}` | Studio: Additional environment variables for all pods |

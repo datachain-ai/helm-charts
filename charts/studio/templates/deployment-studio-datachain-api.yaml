@@ -148,8 +148,17 @@ spec:
             claimName: blobvault
         {{- end }}
         - name: studio-ca-certificates
+          {{- if .Values.global.customCaCertsFromSecret }}
+          projected:
+            sources:
+              - configMap:
+                  name: studio-ca-certificates
+              - secret:
+                  name: {{ .Values.global.customCaCertsFromSecret }}
+          {{- else }}
           configMap:
             name: studio-ca-certificates
+          {{- end }}
         {{- if and .Values.global.basePath (not (eq .Values.global.basePath "/")) }}
         - name: nginx-config
           configMap:
