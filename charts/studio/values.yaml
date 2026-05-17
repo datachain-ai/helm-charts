@@ -1291,7 +1291,6 @@ vector-aggregator:
     api:
       enabled: true
       address: 0.0.0.0:8686
-      playground: true
     sources:
       vector_agent:
         address: 0.0.0.0:6000
