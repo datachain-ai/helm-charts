@@ -1,6 +1,6 @@
 # studio
 
-![Version: 0.19.80](https://img.shields.io/badge/Version-0.19.80-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
+![Version: 0.19.81](https://img.shields.io/badge/Version-0.19.81-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -14,7 +14,6 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | clickhouse | 9.4.4 |
 | https://helm.vector.dev | vector-agent(vector) | 0.52.0 |
 | https://helm.vector.dev | vector-aggregator(vector) | 0.52.0 |
 | https://valkey.io/valkey-helm | valkey | 0.9.4 |
@@ -23,13 +22,12 @@ A Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| clickhouse.auth.password | string | `"clickhouse"` | ClickHouse password |
+| clickhouse.auth | object | `{"password":"clickhouse","username":"default"}` | ClickHouse credentials for the default user |
 | clickhouse.enabled | bool | `false` | ClickHouse enabled |
-| clickhouse.fullnameOverride | string | `"studio-clickhouse"` | ClickHouse name override |
-| clickhouse.image | object | `{"repository":"bitnamilegacy/clickhouse"}` | ClickHouse image configuration |
-| clickhouse.keeper.image.repository | string | `"bitnamilegacy/clickhouse-keeper"` |  |
-| clickhouse.replicaCount | int | `1` |  |
-| clickhouse.shards | int | `1` |  |
+| clickhouse.image | object | `{"pullPolicy":"IfNotPresent","repository":"clickhouse/clickhouse-server","tag":"24.8"}` | ClickHouse image |
+| clickhouse.storage | object | `{"size":"10Gi","storageClass":""}` | ClickHouse persistent storage |
+| clickhouse.storage.size | string | `"10Gi"` | PVC size for /var/lib/clickhouse |
+| clickhouse.storage.storageClass | string | `""` | StorageClass (empty = cluster default) |
 | global.basePath | string | `""` | Studio: Base path (prefix) |
 | global.blobvault.accessKeyId | string | `""` | Blobvault S3 access key ID |
 | global.blobvault.bucket | string | `""` | Blobvault S3 bucket name |

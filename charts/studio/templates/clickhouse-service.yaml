@@ -1,0 +1,21 @@
+{{- if .Values.clickhouse.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: studio-clickhouse
+  labels:
+    {{- include "studio.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9000
+      targetPort: native
+      protocol: TCP
+      name: native
+    - port: 8123
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "studio-clickhouse.selectorLabels" . | nindent 4 }}
+{{- end }}

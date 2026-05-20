@@ -1,0 +1,57 @@
+{{- if .Values.clickhouse.enabled -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: studio-clickhouse
+  labels:
+    {{- include "studio.labels" . | nindent 4 }}
+spec:
+  serviceName: studio-clickhouse
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "studio-clickhouse.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "studio-clickhouse.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: clickhouse
+          image: "{{ .Values.clickhouse.image.repository }}:{{ .Values.clickhouse.image.tag }}"
+          imagePullPolicy: {{ .Values.clickhouse.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: studio-clickhouse
+          ports:
+            - name: native
+              containerPort: 9000
+              protocol: TCP
+            - name: http
+              containerPort: 8123
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: chdata
+              mountPath: /var/lib/clickhouse
+  volumeClaimTemplates:
+    - metadata:
+        name: chdata
+      spec:
+        accessModes: [ReadWriteOnce]
+        {{- with .Values.clickhouse.storage.storageClass }}
+        storageClassName: {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.clickhouse.storage.size | quote }}
+{{- end }}

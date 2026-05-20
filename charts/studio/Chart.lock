@@ -2,14 +2,11 @@ dependencies:
 - name: valkey
   repository: https://valkey.io/valkey-helm
   version: 0.9.4
-- name: clickhouse
-  repository: https://charts.bitnami.com/bitnami
-  version: 9.4.4
 - name: vector
   repository: https://helm.vector.dev
   version: 0.52.0
 - name: vector
   repository: https://helm.vector.dev
   version: 0.52.0
-digest: sha256:de8d0cd13a1025ae4f5f1b70107c4c9071e3d8466227f7642b7131cccc5436e4
-generated: "2026-05-21T03:31:10.072191+04:00"
+digest: sha256:292ccbcbf78e81e192bb6f2e734b525056d073e1eaccfccada4deb45c62e5ba3
+generated: "2026-05-21T03:36:40.818474+04:00"

@@ -241,25 +241,24 @@ postgres:
 clickhouse:
   # -- ClickHouse enabled
   enabled: false
-  # -- ClickHouse name override
-  fullnameOverride: studio-clickhouse
 
-  # -- ClickHouse image configuration
+  # -- ClickHouse image
   image:
-    repository: bitnamilegacy/clickhouse
+    repository: clickhouse/clickhouse-server
+    tag: "24.8"
+    pullPolicy: IfNotPresent
 
-  keeper:
-    image:
-      repository: bitnamilegacy/clickhouse-keeper
-
-  # Shards / replicas configuration
-  replicaCount: 1
-  shards: 1
-
-  # Change this before deploying
+  # -- ClickHouse credentials for the default user
   auth:
-    # -- ClickHouse password
-    password: "clickhouse"
+    username: default
+    password: clickhouse
+
+  # -- ClickHouse persistent storage
+  storage:
+    # -- PVC size for /var/lib/clickhouse
+    size: 10Gi
+    # -- StorageClass (empty = cluster default)
+    storageClass: ""
 
 # -- Studio UI settings group
 studioUi:

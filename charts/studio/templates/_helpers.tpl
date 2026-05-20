@@ -169,6 +169,11 @@ app.kubernetes.io/name: studio-postgres
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "studio-clickhouse.selectorLabels" -}}
+app.kubernetes.io/name: studio-clickhouse
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 {{/*
 Create the name of the service account to use
 */}}
