@@ -1,6 +1,6 @@
 # studio
 
-![Version: 0.19.77](https://img.shields.io/badge/Version-0.19.77-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
+![Version: 0.19.78](https://img.shields.io/badge/Version-0.19.78-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -93,28 +93,6 @@ A Helm chart for Kubernetes
 | global.security | object | `{"allowInsecureImages":true}` | Security settings for Bitnami Legacy images |
 | global.security.allowInsecureImages | bool | `true` | Allow insecure images from bitnamilegacy repository |
 | imagePullSecrets | list | `[]` | Secret containing Docker registry credentials |
-| pgBouncer | object | `{"affinity":{},"autoscaling":{"enabled":false,"maxReplicas":5,"minReplicas":1,"targetCPUUtilizationPercentage":80},"enabled":false,"envFromSecret":"","envVars":{},"image":{"pullPolicy":"IfNotPresent","repository":"bitnamilegacy/pgbouncer","tag":"1.24.1"},"nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"replicaCount":1,"resources":{"limits":{"memory":"1024Mi"},"requests":{"cpu":"500m","memory":"512Mi"}},"securityContext":{},"service":{"port":6432,"type":"ClusterIP"},"serviceAccountName":"","tolerations":[]}` | PgBouncer settings group |
-| pgBouncer.affinity | object | `{}` | PgBouncer pod affinity configuration |
-| pgBouncer.autoscaling | object | `{"enabled":false,"maxReplicas":5,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | PgBouncer autoscaling configuration |
-| pgBouncer.autoscaling.enabled | bool | `false` | PgBouncer autoscaling enabled flag |
-| pgBouncer.autoscaling.maxReplicas | int | `5` | PgBouncer autoscaling max replicas |
-| pgBouncer.autoscaling.minReplicas | int | `1` | PgBouncer autoscaling min replicas |
-| pgBouncer.autoscaling.targetCPUUtilizationPercentage | int | `80` | PgBouncer autoscaling target CPU utilization percentage |
-| pgBouncer.envFromSecret | string | `""` | The name of an existing Secret that contains sensitive environment variables. |
-| pgBouncer.envVars | object | `{}` | Additional environment variables for PgBouncer pods |
-| pgBouncer.image | object | `{"pullPolicy":"IfNotPresent","repository":"bitnamilegacy/pgbouncer","tag":"1.24.1"}` | PgBouncer image settings |
-| pgBouncer.image.pullPolicy | string | `"IfNotPresent"` | PgBouncer image pull policy |
-| pgBouncer.image.repository | string | `"bitnamilegacy/pgbouncer"` | PgBouncer image repository |
-| pgBouncer.image.tag | string | `"1.24.1"` | PgBouncer image tag |
-| pgBouncer.nodeSelector | object | `{}` | PgBouncer pod node selector configuration |
-| pgBouncer.podAnnotations | object | `{}` | Additional PgBouncer pod annotations |
-| pgBouncer.podSecurityContext | object | `{}` | PgBouncer pod security context configuration |
-| pgBouncer.resources | object | `{"limits":{"memory":"1024Mi"},"requests":{"cpu":"500m","memory":"512Mi"}}` | PgBouncer resources configuration |
-| pgBouncer.resources.limits | object | `{"memory":"1024Mi"}` | PgBouncer limits configuration |
-| pgBouncer.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | PgBouncer requests configuration |
-| pgBouncer.securityContext | object | `{}` | PgBouncer pod security context configuration |
-| pgBouncer.serviceAccountName | string | `""` | PgBouncer service account name |
-| pgBouncer.tolerations | list | `[]` | PgBouncer pod tolerations configuration |
 | postgresql.enabled | bool | `true` | Postgres enabled |
 | postgresql.fullnameOverride | string | `"studio-postgresql"` | Postgres name override |
 | postgresql.global.postgresql.auth.database | string | `"iterativeai"` | Postgres database |
