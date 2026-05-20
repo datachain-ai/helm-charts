@@ -2,9 +2,6 @@ dependencies:
 - name: valkey
   repository: https://valkey.io/valkey-helm
   version: 0.9.4
-- name: postgresql
-  repository: https://charts.bitnami.com/bitnami
-  version: 18.0.17
 - name: clickhouse
   repository: https://charts.bitnami.com/bitnami
   version: 9.4.4
@@ -14,5 +11,5 @@ dependencies:
 - name: vector
   repository: https://helm.vector.dev
   version: 0.52.0
-digest: sha256:626290025a34f6e9ba799c25bfc3a3788af3c798e50782fdf32dc7a7bef4b534
-generated: "2026-05-21T03:15:16.639607+04:00"
+digest: sha256:de8d0cd13a1025ae4f5f1b70107c4c9071e3d8466227f7642b7131cccc5436e4
+generated: "2026-05-21T03:31:10.072191+04:00"

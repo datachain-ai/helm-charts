@@ -164,6 +164,11 @@ app.kubernetes.io/name: studio-worker
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "studio-postgres.selectorLabels" -}}
+app.kubernetes.io/name: studio-postgres
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 {{/*
 Create the name of the service account to use
 */}}

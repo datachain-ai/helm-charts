@@ -221,25 +221,22 @@ valkey:
   valkeyConfig: |-
     timeout 20
 
-postgresql:
+postgres:
   # -- Postgres enabled
   enabled: true
-  # -- Postgres name override
-  fullnameOverride: studio-postgresql
 
-  # -- Postgres image configuration
+  # -- Postgres image
   image:
-    repository: bitnamilegacy/postgresql
-    tag: 14.5.0-debian-11-r35
+    repository: postgres
+    tag: "14"
+    pullPolicy: IfNotPresent
 
-  # Change this before deploying
-  global:
-    postgresql:
-      auth:
-        # -- Postgres password
-        postgresPassword: postgres
-        # -- Postgres database
-        database: iterativeai
+  # -- Postgres persistent storage
+  storage:
+    # -- PVC size for PGDATA
+    size: 8Gi
+    # -- StorageClass (empty = cluster default)
+    storageClass: ""
 
 clickhouse:
   # -- ClickHouse enabled

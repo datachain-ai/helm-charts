@@ -1,6 +1,6 @@
 # studio
 
-![Version: 0.19.79](https://img.shields.io/badge/Version-0.19.79-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
+![Version: 0.19.80](https://img.shields.io/badge/Version-0.19.80-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -15,10 +15,9 @@ A Helm chart for Kubernetes
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | clickhouse | 9.4.4 |
-| https://charts.bitnami.com/bitnami | postgresql | 18.0.17 |
 | https://helm.vector.dev | vector-agent(vector) | 0.52.0 |
 | https://helm.vector.dev | vector-aggregator(vector) | 0.52.0 |
-| https://valkey.io/valkey-helm/ | valkey | 0.9.4 |
+| https://valkey.io/valkey-helm | valkey | 0.9.4 |
 
 ## Values
 
@@ -93,11 +92,11 @@ A Helm chart for Kubernetes
 | global.security | object | `{"allowInsecureImages":true}` | Security settings for Bitnami Legacy images |
 | global.security.allowInsecureImages | bool | `true` | Allow insecure images from bitnamilegacy repository |
 | imagePullSecrets | list | `[]` | Secret containing Docker registry credentials |
-| postgresql.enabled | bool | `true` | Postgres enabled |
-| postgresql.fullnameOverride | string | `"studio-postgresql"` | Postgres name override |
-| postgresql.global.postgresql.auth.database | string | `"iterativeai"` | Postgres database |
-| postgresql.global.postgresql.auth.postgresPassword | string | `"postgres"` | Postgres password |
-| postgresql.image | object | `{"repository":"bitnamilegacy/postgresql","tag":"14.5.0-debian-11-r35"}` | Postgres image configuration |
+| postgres.enabled | bool | `true` | Postgres enabled |
+| postgres.image | object | `{"pullPolicy":"IfNotPresent","repository":"postgres","tag":"14"}` | Postgres image |
+| postgres.storage | object | `{"size":"8Gi","storageClass":""}` | Postgres persistent storage |
+| postgres.storage.size | string | `"8Gi"` | PVC size for PGDATA |
+| postgres.storage.storageClass | string | `""` | StorageClass (empty = cluster default) |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `false` |  |
 | serviceAccount.name | string | `""` |  |
