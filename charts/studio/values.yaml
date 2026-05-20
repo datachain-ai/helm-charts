@@ -6,11 +6,6 @@
 imagePullSecrets: []
 
 global:
-  # -- Security settings for Bitnami Legacy images
-  security:
-    # -- Allow insecure images from bitnamilegacy repository
-    allowInsecureImages: true
-
   # -- Studio: Hostname for accessing Studio (no http(s) scheme)
   host: "studio.example.com"
   # -- Studio: Base path (prefix)

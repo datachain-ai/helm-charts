@@ -1,6 +1,6 @@
 # studio
 
-![Version: 0.19.81](https://img.shields.io/badge/Version-0.19.81-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
+![Version: 0.20.0](https://img.shields.io/badge/Version-0.20.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -87,8 +87,6 @@ A Helm chart for Kubernetes
 | global.scmProviders.tlsEnabled | bool | `false` | Enable HTTPS protocol for incoming webhooks (this works only if `global.scmProviders.webhookHost` is set; otherwise is ignored). |
 | global.scmProviders.webhookHost | string | `$global.host` value. | Custom hostname for incoming webhook (if Studio runs on a private network and you use SaaS versions of GitHub, GitLab, or Bitbucket) |
 | global.secretKey | string | `""` | Studio: Django SECRET_KEY to encrypt, DB, sign reaquests, etc We recommend you set and manage this externally as other secrets (e.g. DB password, user name, REDIS password, etc). If left empty, a random key will be generated. If it's not saved and lost it might be hard to recover the DB. |
-| global.security | object | `{"allowInsecureImages":true}` | Security settings for Bitnami Legacy images |
-| global.security.allowInsecureImages | bool | `true` | Allow insecure images from bitnamilegacy repository |
 | imagePullSecrets | list | `[]` | Secret containing Docker registry credentials |
 | postgres.enabled | bool | `true` | Postgres enabled |
 | postgres.image | object | `{"pullPolicy":"IfNotPresent","repository":"postgres","tag":"14"}` | Postgres image |
