@@ -1,7 +1,7 @@
 dependencies:
-- name: redis
-  repository: https://charts.bitnami.com/bitnami
-  version: 23.1.3
+- name: valkey
+  repository: https://valkey.io/valkey-helm
+  version: 0.9.4
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 18.0.17
@@ -14,5 +14,5 @@ dependencies:
 - name: vector
   repository: https://helm.vector.dev
   version: 0.52.0
-digest: sha256:519bbf11f42f9490c59fcc963dc952a9c2db0e2a81e4eb59add04a728e440cf9
-generated: "2026-05-17T02:17:26.431486468Z"
+digest: sha256:626290025a34f6e9ba799c25bfc3a3788af3c798e50782fdf32dc7a7bef4b534
+generated: "2026-05-21T03:15:16.639607+04:00"

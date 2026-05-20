@@ -1,6 +1,6 @@
 # studio
 
-![Version: 0.19.78](https://img.shields.io/badge/Version-0.19.78-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
+![Version: 0.19.79](https://img.shields.io/badge/Version-0.19.79-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.241.2](https://img.shields.io/badge/AppVersion-v2.241.2-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -16,9 +16,9 @@ A Helm chart for Kubernetes
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | clickhouse | 9.4.4 |
 | https://charts.bitnami.com/bitnami | postgresql | 18.0.17 |
-| https://charts.bitnami.com/bitnami | redis | 23.1.3 |
 | https://helm.vector.dev | vector-agent(vector) | 0.52.0 |
 | https://helm.vector.dev | vector-aggregator(vector) | 0.52.0 |
+| https://valkey.io/valkey-helm/ | valkey | 0.9.4 |
 
 ## Values
 
@@ -98,19 +98,6 @@ A Helm chart for Kubernetes
 | postgresql.global.postgresql.auth.database | string | `"iterativeai"` | Postgres database |
 | postgresql.global.postgresql.auth.postgresPassword | string | `"postgres"` | Postgres password |
 | postgresql.image | object | `{"repository":"bitnamilegacy/postgresql","tag":"14.5.0-debian-11-r35"}` | Postgres image configuration |
-| redis.auth | object | `{"enabled":false}` | Redis authentication settings |
-| redis.auth.enabled | bool | `false` | Redis authentication disabled |
-| redis.commonConfiguration | string | `"timeout 20"` | Redis common configuration to be added into the ConfigMap |
-| redis.enabled | bool | `true` | Redis enabled |
-| redis.fullnameOverride | string | `"studio-redis"` | Redis name override |
-| redis.image | object | `{"repository":"bitnamilegacy/redis"}` | Redis image configuration |
-| redis.master | object | `{"persistence":{"enabled":false},"resources":{"limits":{"cpu":"1000m","memory":"2Gi"},"requests":{"cpu":"200m","memory":"512Mi"}}}` | Redis master configuration |
-| redis.master.persistence | object | `{"enabled":false}` | Redis master persistence configuration |
-| redis.master.persistence.enabled | bool | `false` | Redis master persistence is disabled |
-| redis.replica | object | `{"persistence":{"enabled":false},"replicaCount":0}` | Redis replica configuration |
-| redis.replica.persistence | object | `{"enabled":false}` | Redis replica persistence configuration |
-| redis.replica.persistence.enabled | bool | `false` | Redis replica persistence is disabled |
-| redis.replica.replicaCount | int | `0` | Redis replica count. 0 for standalone deployment of 1 master and 0 replicas |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `false` |  |
 | serviceAccount.name | string | `""` |  |
@@ -234,6 +221,10 @@ A Helm chart for Kubernetes
 | studioWorker.strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}` | Worker deployment strategy |
 | studioWorker.terminationGracePeriodSeconds | int | `150` | Worker termination grace period |
 | studioWorker.tolerations | list | `[]` | Worker tolerations |
+| valkey.enabled | bool | `true` | Valkey enabled |
+| valkey.fullnameOverride | string | `"studio-valkey"` | Valkey name override |
+| valkey.resources | object | `{"limits":{"cpu":"1000m","memory":"2Gi"},"requests":{"cpu":"200m","memory":"512Mi"}}` | Valkey resource requests and limits |
+| valkey.valkeyConfig | string | `"timeout 20"` | Extra valkey.conf directives appended to the ConfigMap |
 | vector-agent | object | `{"customConfig":{"api":{"enabled":false},"data_dir":"/data/vector","expire_metrics_secs":60,"sinks":{"vector_aggregator":{"address":"studio-vector-aggregator:6000","compression":true,"inputs":["kubernetes_logs_filtered","kubernetes_metrics_filtered","kubernetes_metrics_cadvisor_filtered"],"type":"vector"}},"sources":{"kubernetes_logs":{"ignore_older_secs":600,"type":"kubernetes_logs"},"kubernetes_metrics":{"auth":{"strategy":"bearer","token":"${KUBERNETES_SERVICE_ACCOUNT_TOKEN:?}"},"endpoints":["https://${KUBERNETES_NODE_IP}:10250/metrics"],"scrape_interval_secs":30,"tls":{"verify_certificate":false},"type":"prometheus_scrape"},"kubernetes_metrics_cadvisor":{"auth":{"strategy":"bearer","token":"${KUBERNETES_SERVICE_ACCOUNT_TOKEN:?}"},"endpoints":["https://${KUBERNETES_NODE_IP}:10250/metrics/cadvisor"],"scrape_interval_secs":30,"tls":{"verify_certificate":false},"type":"prometheus_scrape"}},"transforms":{"kubernetes_logs_filtered":{"inputs":["kubernetes_logs"],"source":". = {\n  \"message\": .message,\n  \"source_type\": .source_type,\n  \"stream\": .stream,\n  \"timestamp\": .timestamp,\n  \"kubernetes\": {\n    \"pod_name\": .kubernetes.pod_name,\n    \"namespace\": .kubernetes.pod_namespace,\n    \"container_name\": .kubernetes.container_name\n  }\n}\n","type":"remap"},"kubernetes_metrics_cadvisor_filtered":{"condition":".name == \"node_cpu_usage_seconds_total\" || .name == \"node_memory_working_set_bytes\" || .name == \"container_cpu_usage_seconds_total\" || .name == \"container_memory_working_set_bytes\" || .name == \"container_start_time_seconds\"","inputs":["kubernetes_metrics_cadvisor"],"type":"filter"},"kubernetes_metrics_filtered":{"condition":"starts_with!(.name, \"kubelet_volume_stats_\") || .name == \"kubelet_image_pull_duration_seconds\"","inputs":["kubernetes_metrics"],"type":"filter"}}},"defaultVolumeMounts":[{"mountPath":"/var/log/","name":"var-log","readOnly":true}],"defaultVolumes":[{"hostPath":{"path":"/var/log/"},"name":"var-log"}],"enabled":false,"env":[{"name":"KUBERNETES_SERVICE_ACCOUNT_TOKEN","valueFrom":{"secretKeyRef":{"key":"token","name":"studio-vector-agent-token"}}},{"name":"KUBERNETES_NODE_IP","valueFrom":{"fieldRef":{"fieldPath":"status.hostIP"}}}],"extraObjects":[{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRole","metadata":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"hook-failed, before-hook-creation"},"name":"studio-vector-agent-extended"},"rules":[{"apiGroups":[""],"resources":["nodes/metrics","nodes/stats"],"verbs":["get"]}]},{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRoleBinding","metadata":{"annotations":{"helm.sh/hook":"pre-install, pre-upgrade","helm.sh/hook-delete-policy":"hook-failed, before-hook-creation"},"name":"studio-vector-agent-extended"},"roleRef":{"kind":"ClusterRole","name":"studio-vector-agent-extended"},"subjects":[{"kind":"ServiceAccount","name":"studio-vector-agent","namespace":"default"}]},{"apiVersion":"v1","kind":"Secret","metadata":{"annotations":{"kubernetes.io/service-account.name":"studio-vector-agent"},"name":"studio-vector-agent-token"},"type":"kubernetes.io/service-account-token"}],"fullnameOverride":"studio-vector-agent","image":{"base":"alpine"},"persistence":{"hostPath":{"enabled":false}},"role":"Agent","serviceAccount":{"create":true,"name":"studio-vector-agent"},"tolerations":[{"operator":"Exists"}]}` | Vector Agent configuration for log collection (DaemonSet) |
 | vector-agent.customConfig | object | `{"api":{"enabled":false},"data_dir":"/data/vector","expire_metrics_secs":60,"sinks":{"vector_aggregator":{"address":"studio-vector-aggregator:6000","compression":true,"inputs":["kubernetes_logs_filtered","kubernetes_metrics_filtered","kubernetes_metrics_cadvisor_filtered"],"type":"vector"}},"sources":{"kubernetes_logs":{"ignore_older_secs":600,"type":"kubernetes_logs"},"kubernetes_metrics":{"auth":{"strategy":"bearer","token":"${KUBERNETES_SERVICE_ACCOUNT_TOKEN:?}"},"endpoints":["https://${KUBERNETES_NODE_IP}:10250/metrics"],"scrape_interval_secs":30,"tls":{"verify_certificate":false},"type":"prometheus_scrape"},"kubernetes_metrics_cadvisor":{"auth":{"strategy":"bearer","token":"${KUBERNETES_SERVICE_ACCOUNT_TOKEN:?}"},"endpoints":["https://${KUBERNETES_NODE_IP}:10250/metrics/cadvisor"],"scrape_interval_secs":30,"tls":{"verify_certificate":false},"type":"prometheus_scrape"}},"transforms":{"kubernetes_logs_filtered":{"inputs":["kubernetes_logs"],"source":". = {\n  \"message\": .message,\n  \"source_type\": .source_type,\n  \"stream\": .stream,\n  \"timestamp\": .timestamp,\n  \"kubernetes\": {\n    \"pod_name\": .kubernetes.pod_name,\n    \"namespace\": .kubernetes.pod_namespace,\n    \"container_name\": .kubernetes.container_name\n  }\n}\n","type":"remap"},"kubernetes_metrics_cadvisor_filtered":{"condition":".name == \"node_cpu_usage_seconds_total\" || .name == \"node_memory_working_set_bytes\" || .name == \"container_cpu_usage_seconds_total\" || .name == \"container_memory_working_set_bytes\" || .name == \"container_start_time_seconds\"","inputs":["kubernetes_metrics_cadvisor"],"type":"filter"},"kubernetes_metrics_filtered":{"condition":"starts_with!(.name, \"kubelet_volume_stats_\") || .name == \"kubelet_image_pull_duration_seconds\"","inputs":["kubernetes_metrics"],"type":"filter"}}}` | Vector Agent configuration |
 | vector-agent.enabled | bool | `false` | Vector Agent enabled |

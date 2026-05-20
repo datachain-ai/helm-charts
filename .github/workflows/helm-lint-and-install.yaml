@@ -38,6 +38,7 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add vector https://helm.vector.dev
+          helm repo add valkey https://valkey.io/valkey-helm
 
       - name: Run chart-testing (list-changed)
         id: list-changed
