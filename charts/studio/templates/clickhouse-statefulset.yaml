@@ -24,6 +24,8 @@ spec:
         - name: clickhouse
           image: "{{ .Values.clickhouse.image.repository }}:{{ .Values.clickhouse.image.tag }}"
           imagePullPolicy: {{ .Values.clickhouse.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.clickhouse.resources | nindent 12 }}
           envFrom:
             - secretRef:
                 name: studio-clickhouse

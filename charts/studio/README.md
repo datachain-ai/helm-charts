@@ -25,6 +25,7 @@ A Helm chart for Kubernetes
 | clickhouse.auth | object | `{"password":"clickhouse","username":"default"}` | ClickHouse credentials for the default user |
 | clickhouse.enabled | bool | `false` | ClickHouse enabled |
 | clickhouse.image | object | `{"pullPolicy":"IfNotPresent","repository":"clickhouse/clickhouse-server","tag":"24.8"}` | ClickHouse image |
+| clickhouse.resources | object | `{}` | ClickHouse resource requests and limits |
 | clickhouse.storage | object | `{"size":"10Gi","storageClass":""}` | ClickHouse persistent storage |
 | clickhouse.storage.size | string | `"10Gi"` | PVC size for /var/lib/clickhouse |
 | clickhouse.storage.storageClass | string | `""` | StorageClass (empty = cluster default) |
@@ -90,6 +91,7 @@ A Helm chart for Kubernetes
 | imagePullSecrets | list | `[]` | Secret containing Docker registry credentials |
 | postgres.enabled | bool | `true` | Postgres enabled |
 | postgres.image | object | `{"pullPolicy":"IfNotPresent","repository":"postgres","tag":"14"}` | Postgres image |
+| postgres.resources | object | `{}` | Postgres resource requests and limits |
 | postgres.storage | object | `{"size":"8Gi","storageClass":""}` | Postgres persistent storage |
 | postgres.storage.size | string | `"8Gi"` | PVC size for PGDATA |
 | postgres.storage.storageClass | string | `""` | StorageClass (empty = cluster default) |

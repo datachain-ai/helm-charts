@@ -24,6 +24,8 @@ spec:
         - name: postgres
           image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
           imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.postgres.resources | nindent 12 }}
           envFrom:
             - secretRef:
                 name: studio-postgres

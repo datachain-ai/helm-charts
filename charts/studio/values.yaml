@@ -226,6 +226,9 @@ postgres:
     tag: "14"
     pullPolicy: IfNotPresent
 
+  # -- Postgres resource requests and limits
+  resources: {}
+
   # -- Postgres persistent storage
   storage:
     # -- PVC size for PGDATA
@@ -247,6 +250,9 @@ clickhouse:
   auth:
     username: default
     password: clickhouse
+
+  # -- ClickHouse resource requests and limits
+  resources: {}
 
   # -- ClickHouse persistent storage
   storage:
