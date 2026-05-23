@@ -6,11 +6,6 @@
 imagePullSecrets: []
 
 global:
-  # -- Security settings for Bitnami Legacy images
-  security:
-    # -- Allow insecure images from bitnamilegacy repository
-    allowInsecureImages: true
-
   # -- Studio: Hostname for accessing Studio (no http(s) scheme)
   host: "studio.example.com"
   # -- Studio: Base path (prefix)
@@ -202,173 +197,69 @@ global:
       # -- Bitbucket OAuth App Secret Key
       secretKey: ""
 
-redis:
-  # -- Redis enabled
+valkey:
+  # -- Valkey enabled
   enabled: true
-  # -- Redis name override
-  fullnameOverride: studio-redis
+  # -- Valkey name override
+  fullnameOverride: studio-valkey
 
-  # -- Redis image configuration
-  image:
-    repository: bitnamilegacy/redis
+  # -- Valkey resource requests and limits
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
 
-  # -- Redis master configuration
-  master:
-    ## Redis&reg; master resource requests and limits
-    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
-    ## @param master.resources.limits The resources limits for the Redis&reg; master containers
-    ## @param master.resources.requests The requested resources for the Redis&reg; master containers
-    resources:
-      requests:
-        cpu: "200m"
-        memory: "512Mi"
-      limits:
-        cpu: "1000m"
-        memory: "2Gi"
-    # -- Redis master persistence configuration
-    persistence:
-      # -- Redis master persistence is disabled
-      enabled: false
-
-  # -- Redis replica configuration
-  replica:
-    # -- Redis replica count. 0 for standalone deployment of 1 master and 0 replicas
-    replicaCount: 0
-    # -- Redis replica persistence configuration
-    persistence:
-      # -- Redis replica persistence is disabled
-      enabled: false
-
-  # -- Redis common configuration to be added into the ConfigMap
-  commonConfiguration: |-
+  # -- Extra valkey.conf directives appended to the ConfigMap
+  valkeyConfig: |-
     timeout 20
 
-  # -- Redis authentication settings
-  auth:
-    # -- Redis authentication disabled
-    enabled: false
-
-postgresql:
+postgres:
   # -- Postgres enabled
   enabled: true
-  # -- Postgres name override
-  fullnameOverride: studio-postgresql
 
-  # -- Postgres image configuration
+  # -- Postgres image
   image:
-    repository: bitnamilegacy/postgresql
-    tag: 14.5.0-debian-11-r35
+    repository: postgres
+    tag: "14"
+    pullPolicy: IfNotPresent
 
-  # Change this before deploying
-  global:
-    postgresql:
-      auth:
-        # -- Postgres password
-        postgresPassword: postgres
-        # -- Postgres database
-        database: iterativeai
+  # -- Postgres resource requests and limits
+  resources: {}
+
+  # -- Postgres persistent storage
+  storage:
+    # -- PVC size for PGDATA
+    size: 8Gi
+    # -- StorageClass (empty = cluster default)
+    storageClass: ""
 
 clickhouse:
   # -- ClickHouse enabled
   enabled: false
-  # -- ClickHouse name override
-  fullnameOverride: studio-clickhouse
 
-  # -- ClickHouse image configuration
+  # -- ClickHouse image
   image:
-    repository: bitnamilegacy/clickhouse
-
-  keeper:
-    image:
-      repository: bitnamilegacy/clickhouse-keeper
-
-  # Shards / replicas configuration
-  replicaCount: 1
-  shards: 1
-
-  # Change this before deploying
-  auth:
-    # -- ClickHouse password
-    password: "clickhouse"
-
-# -- PgBouncer settings group
-pgBouncer:
-  enabled: false
-
-  # -- PgBouncer image settings
-  image:
-    # -- PgBouncer image repository
-    repository: bitnamilegacy/pgbouncer
-    # -- PgBouncer image pull policy
+    repository: clickhouse/clickhouse-server
+    tag: "24.8"
     pullPolicy: IfNotPresent
-    # -- PgBouncer image tag
-    tag: "1.24.1"
 
-  service:
-    type: ClusterIP
-    port: 6432
+  # -- ClickHouse credentials for the default user
+  auth:
+    username: default
+    password: clickhouse
 
-  # -- Additional environment variables for PgBouncer pods
-  envVars: {}
-  # Example:
-  # envVars:
-  #   DEBUG: "True"
+  # -- ClickHouse resource requests and limits
+  resources: {}
 
-  # -- The name of an existing Secret that contains sensitive environment variables.
-  envFromSecret: ""
-
-  replicaCount: 1
-
-  # -- PgBouncer resources configuration
-  resources:
-    # -- PgBouncer requests configuration
-    requests:
-      cpu: 500m
-      memory: 512Mi
-    # -- PgBouncer limits configuration
-    limits:
-      memory: 1024Mi
-
-  # -- PgBouncer autoscaling configuration
-  autoscaling:
-    # -- PgBouncer autoscaling enabled flag
-    enabled: false
-    # -- PgBouncer autoscaling min replicas
-    minReplicas: 1
-    # -- PgBouncer autoscaling max replicas
-    maxReplicas: 5
-    # -- PgBouncer autoscaling target CPU utilization percentage
-    targetCPUUtilizationPercentage: 80
-    # -- PgBouncer autoscaling target memory utilization percentage
-    # targetMemoryUtilizationPercentage: 80
-
-  # -- Additional PgBouncer pod annotations
-  podAnnotations: {}
-
-  # -- PgBouncer pod security context configuration
-  podSecurityContext: {}
-  # fsGroup: 2000
-
-  # -- PgBouncer pod security context configuration
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-  # runAsUser: 1000
-
-  # -- PgBouncer service account name
-  serviceAccountName: ""
-
-  # -- PgBouncer pod node selector configuration
-  nodeSelector: {}
-
-  # -- PgBouncer pod tolerations configuration
-  tolerations: []
-
-  # -- PgBouncer pod affinity configuration
-  affinity: {}
+  # -- ClickHouse persistent storage
+  storage:
+    # -- PVC size for /var/lib/clickhouse
+    size: 10Gi
+    # -- StorageClass (empty = cluster default)
+    storageClass: ""
 
 # -- Studio UI settings group
 studioUi:

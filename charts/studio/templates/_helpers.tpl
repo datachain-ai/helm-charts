@@ -115,15 +115,6 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
-{{- define "pgbouncer.labels" -}}
-helm.sh/chart: {{ include "studio.chart" . }}
-{{ include "pgbouncer.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
 {{/*
 Selector labels
 */}}
@@ -173,11 +164,15 @@ app.kubernetes.io/name: studio-worker
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "pgbouncer.selectorLabels" -}}
-app.kubernetes.io/name: pgbouncer
+{{- define "studio-postgres.selectorLabels" -}}
+app.kubernetes.io/name: studio-postgres
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "studio-clickhouse.selectorLabels" -}}
+app.kubernetes.io/name: studio-clickhouse
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
 
 {{/*
 Create the name of the service account to use
