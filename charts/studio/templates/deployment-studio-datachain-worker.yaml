@@ -58,6 +58,8 @@ spec:
               value: "0"
             - name: WATCHDOG_KEEPALIVE_FILE
               value: "/tmp/watchdog-keepalive"
+            - name: BEAT_KEEPALIVE_FILE
+              value: "/tmp/beat-keepalive"
           envFrom:
             - configMapRef:
                 name: studio
@@ -75,13 +77,13 @@ spec:
             {{- end }}
           startupProbe:
             exec:
-              command: ["/app/bin/healthcheck/datachain-worker-startup.sh"]
+              command: ["/app/bin/healthcheck/datachain-master-startup.sh"]
             initialDelaySeconds: 3
             periodSeconds: 3
             failureThreshold: 100
           livenessProbe:
             exec:
-              command: ["/app/bin/healthcheck/datachain-worker-liveness.sh"]
+              command: ["/app/bin/healthcheck/datachain-master-liveness.sh"]
             initialDelaySeconds: 3
             periodSeconds: 5
             failureThreshold: 3
