@@ -2,6 +2,35 @@ apiVersion: v1
 entries:
   studio:
   - apiVersion: v2
+    appVersion: v2.242.1
+    created: "2026-05-31T11:26:56.034250425Z"
+    dependencies:
+    - condition: valkey.enabled
+      name: valkey
+      repository: https://valkey.io/valkey-helm
+      version: 0.9.4
+    - alias: vector-agent
+      condition: vector-agent.enabled
+      name: vector
+      repository: https://helm.vector.dev
+      version: 0.52.0
+    - alias: vector-aggregator
+      condition: vector-aggregator.enabled
+      name: vector
+      repository: https://helm.vector.dev
+      version: 0.52.0
+    description: A Helm chart for Kubernetes
+    digest: 8234c7b4c8c7d53288e1696d383316f527f26578404cbede497d0cae4968e613
+    icon: https://static.iterative.ai/logo/studio.svg
+    maintainers:
+    - email: support@iterative.ai
+      name: iterative
+    name: studio
+    type: application
+    urls:
+    - https://github.com/datachain-ai/helm-charts/releases/download/studio-0.20.2/studio-0.20.2.tgz
+    version: 0.20.2
+  - apiVersion: v2
     appVersion: v2.242.0
     created: "2026-05-29T17:44:23.647774509Z"
     dependencies:
@@ -16780,4 +16809,4 @@ entries:
     urls:
     - https://github.com/iterative/helm-charts/releases/download/studio-0.1.0/studio-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-29T17:44:23.649055027Z"
+generated: "2026-05-31T11:26:56.036534282Z"
