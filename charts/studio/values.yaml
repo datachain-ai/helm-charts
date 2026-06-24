@@ -243,7 +243,7 @@ clickhouse:
   # -- ClickHouse image
   image:
     repository: clickhouse/clickhouse-server
-    tag: "24.8"
+    tag: "26.2"
     pullPolicy: IfNotPresent
 
   # -- ClickHouse credentials for the default user

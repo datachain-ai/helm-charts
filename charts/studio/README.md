@@ -24,7 +24,7 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | clickhouse.auth | object | `{"password":"clickhouse","username":"default"}` | ClickHouse credentials for the default user |
 | clickhouse.enabled | bool | `false` | ClickHouse enabled |
-| clickhouse.image | object | `{"pullPolicy":"IfNotPresent","repository":"clickhouse/clickhouse-server","tag":"24.8"}` | ClickHouse image |
+| clickhouse.image | object | `{"pullPolicy":"IfNotPresent","repository":"clickhouse/clickhouse-server","tag":"26.2"}` | ClickHouse image |
 | clickhouse.resources | object | `{}` | ClickHouse resource requests and limits |
 | clickhouse.storage | object | `{"size":"10Gi","storageClass":""}` | ClickHouse persistent storage |
 | clickhouse.storage.size | string | `"10Gi"` | PVC size for /var/lib/clickhouse |
