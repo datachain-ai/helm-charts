@@ -6,11 +6,7 @@ metadata:
     {{- include "studio-datachain-worker.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.studioDatachainWorker.autoscaling.enabled }}
-  {{- if ((.Values.global.datachain).udfEnabled) }}
   replicas: {{ .Values.studioDatachainWorker.replicaCount }}
-  {{- else }}
-  replicas: 0
-  {{- end }}
   {{- end }}
   {{- with .Values.studioDatachainWorker.strategy }}
   strategy:
