@@ -1,6 +1,6 @@
 # studio
 
-![Version: 0.20.16](https://img.shields.io/badge/Version-0.20.16-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.247.3](https://img.shields.io/badge/AppVersion-v2.247.3-informational?style=flat-square)
+![Version: 0.21.0](https://img.shields.io/badge/Version-0.21.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.247.3](https://img.shields.io/badge/AppVersion-v2.247.3-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -14,8 +14,8 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.vector.dev | vector-agent(vector) | 0.52.0 |
-| https://helm.vector.dev | vector-aggregator(vector) | 0.52.0 |
+| https://helm.vector.dev | vector-agent(vector) | 0.58.0 |
+| https://helm.vector.dev | vector-aggregator(vector) | 0.58.0 |
 | https://valkey.io/valkey-helm | valkey | 0.9.4 |
 
 ## Values
