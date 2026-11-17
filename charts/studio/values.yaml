@@ -1041,6 +1041,10 @@ vector-agent:
       valueFrom:
         fieldRef:
           fieldPath: status.hostIP
+    # Vector >= 0.57 disables `${VAR}` interpolation in configs by default.
+    # The sources above rely on it, so it has to be opted back in explicitly.
+    - name: VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION
+      value: "true"
 
   extraObjects:
     - apiVersion: rbac.authorization.k8s.io/v1
@@ -1259,6 +1263,10 @@ vector-aggregator:
         secretKeyRef:
           name: studio-vector-aggregator-token
           key: token
+    # Vector >= 0.57 disables `${VAR}` interpolation in configs by default.
+    # The sources above rely on it, so it has to be opted back in explicitly.
+    - name: VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION
+      value: "true"
 
   extraObjects:
     - apiVersion: rbac.authorization.k8s.io/v1
