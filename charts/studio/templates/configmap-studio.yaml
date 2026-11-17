@@ -124,8 +124,3 @@ data:
   {{- else }}
   SOCIAL_AUTH_ALLOWED_REDIRECT_HOSTS: "studio-ui.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.studioUi.service.port }},studio-backend.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.studioBackend.service.port }}"
   {{- end }}
-
-  {{- $datachain := .Values.global.datachain | default dict }}
-  {{- $datachainClickhouse := $datachain.clickHouse | default dict }}
-  DATACHAIN_ENABLED: {{ $datachain.enabled | default false | quote | title }}
-  DATACHAIN_UDF_ENABLED: {{ $datachain.udfEnabled | default false | quote | title }}

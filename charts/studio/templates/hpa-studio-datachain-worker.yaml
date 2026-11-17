@@ -13,13 +13,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{.Release.Name}}-datachain-worker
-  {{- if ((.Values.global.datachain).udfEnabled) }}
   minReplicas: {{ .Values.studioDatachainWorker.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.studioDatachainWorker.autoscaling.maxReplicas }}
-  {{- else }}
-  minReplicas: 0
-  maxReplicas: 0
-  {{- end}}
   metrics:
     {{- if .Values.studioDatachainWorker.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
